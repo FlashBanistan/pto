@@ -4,6 +4,7 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.contrib.auth import (authenticate, login, logout)
 from django.shortcuts import render, redirect
 from django.views.generic.edit import FormView
+from django.views import generic
 from django.contrib.auth.models import User
 from .forms import UserLoginForm, UserRegisterForm, UserProfileForm, PtoRequestForm
 from accounts.models import PtoHistory
@@ -13,7 +14,7 @@ from accounts.models import PtoHistory
 class IndexView(FormView):
     template_name = 'accounts/index.html'
     form_class = PtoRequestForm
-    success_url = 'accounts:index'
+    success_url = '/accounts/index'
     # Pre-populates the form with the specified values on page load.
     def get_initial(self):
         return {'user': self.request.user}
@@ -40,6 +41,15 @@ class IndexView(FormView):
         return context
 
 
+class HistoryView(generic.ListView):
+    template_name = 'accounts/history.html'
+    context_object_name = 'all_history'
+
+    def get_queryset(self):
+        user_id = self.request.user.pk
+        return PtoHistory.objects.filter(user_id=user_id)
+
+
 def login_view(request):
     title = "Login"
     user_form = UserLoginForm(request.POST or None)
@@ -49,7 +59,7 @@ def login_view(request):
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect("/accounts/?%s" % user.username)
+            return redirect(reverse('accounts:index', args=(username, )))
     return render(request, 'form.html', {'user_form':user_form, 'title':title})
 
 

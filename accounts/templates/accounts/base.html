@@ -35,14 +35,15 @@
             <li><a href="{% url 'accounts:login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
             {% endif %}
             {% if user.is_authenticated %}
-            <li><a href="#">My History</a></li>
-            <li><a href="{% url 'accounts:index' %}"><span class="glyphicon glyphicon-user"></span> {{ user.username }}</a></li>
+            <li><a href="{% url 'accounts:my_history' user.username %}">My History</a></li>
+            <li><a href="{% url 'accounts:index' user.username %}"><span class="glyphicon glyphicon-user"></span> {{ user.username }}</a></li>
             <li><a href="{% url 'accounts:logout' %}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
             {% endif %}
           </ul>
         </div>
       </div>
-
+    </nav>
+    
     {% block content %}
       <!-- Page content will be injected here. -->
     {% endblock %}

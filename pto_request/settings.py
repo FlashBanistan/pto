@@ -59,10 +59,8 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-                    'C:/django projects/PTO/pto_request/templates',
-                    'C:/django projects/PTO/accounts/templates/accounts',
-                    'C:/django projects/PTO/templates',
-
+                    BASE_DIR + '/accounts/templates/accounts/',
+                    BASE_DIR + '/templates/',
                     ],
         'APP_DIRS': True,
         'OPTIONS': {

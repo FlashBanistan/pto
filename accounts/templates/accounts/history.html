@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<div class="container">
+  <h2>History</h2>
+  <p>This is the history</p>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Start</th>
+        <th>End</th>
+        <th>Reason</th>
+        <th>Status</th>
+        <th>chargeable hours</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for history in all_history %}
+      <tr>
+        <td>{{ history.start }}</td>
+        <td>{{ history.end }}</td>
+        <td>{{ history.leave_type }}</td>
+        <td>{{ history.status }}</td>
+        <td>{{ history.get_duration }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock content%}
